@@ -9,22 +9,45 @@ public class ParkingLotSystem {
   /**
    *
    * @param vehicle
-   * @return if vehicle is parked return true else return false
+   * @throws ParkingLotException when parking lot is full
    */
-  public boolean park(Vehicle vehicle) {
-    if (this.vehicle != null) return false;
+  public void park(Vehicle vehicle) throws ParkingLotException {
+    if (this.vehicle != null) throw new ParkingLotException("Parking Lot is Full");
     this.vehicle = vehicle;
-    return true;
   }
 
   /**
    *
    * @param vehicle
-   * @return if unparked return true else return false
+   * @return if vehicle is parked return true else return false
    */
-  public boolean unPark(Vehicle vehicle) {
-    if(this.vehicle==null) return false;
+  public boolean isVehicleParked(Vehicle vehicle) {
     if(this.vehicle.equals(vehicle)) return true;
+    return false;
+  }
+
+  /**
+   *
+   * @param vehicle
+   * @throws ParkingLotException if parking lot is empty and
+   * asked for incorrect vehicle
+   */
+  public void unPark(Vehicle vehicle) throws ParkingLotException {
+    if(this.vehicle==null) throw new ParkingLotException("parking lot is empty");
+    if(this.vehicle.equals(vehicle)) {
+      this.vehicle=null;
+      return;
+    }
+    throw new ParkingLotException("Ask for correct vehicle");
+  }
+
+  /**
+   *
+   * @param vehicle
+   * @return true if parking lot is empty return true else return false
+   */
+  public boolean isVehicleUnParked(Vehicle vehicle) {
+    if(this.vehicle==null) return true;
     return false;
   }
 }

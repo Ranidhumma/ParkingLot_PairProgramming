@@ -10,20 +10,27 @@ import org.junit.Test;
  */
 public class ParkingLotTest {
   private ParkingLotSystem parkingLotSystem;
+
   @Before
   public void setUp() throws Exception {
     parkingLotSystem = new ParkingLotSystem();
   }
 
   /*
-      UC1
-      Test to check the vehicle is parked
-        after calling park method
-       */
+  UC1
+  Test to check the vehicle is parked
+    after calling park method
+   */
   @Test
   public void givenAVehicle_WhenParked_ShouldReturnTrue() {
-      boolean isParked = parkingLotSystem.park(new Vehicle());
+    try {
+      Vehicle vehicle = new Vehicle();
+      parkingLotSystem.park(vehicle);
+      boolean isParked = parkingLotSystem.isVehicleParked(vehicle);
       Assert.assertTrue(isParked);
+    } catch (ParkingLotException e) {
+//      e.printStackTrace();
+    }
   }
 
   /*
@@ -32,28 +39,57 @@ public class ParkingLotTest {
      another vehicle it should return false
   */
   @Test
-  public void givenAVehicleAlreadyParked_WhenTryToParkAnotherVehicle_ShouldReturnFalse() {
-    Vehicle vehicle = new Vehicle();
-    Vehicle vehicle1 = new Vehicle();
-    parkingLotSystem.park(vehicle);
-    boolean isParked = parkingLotSystem.park(vehicle1);
-    Assert.assertFalse(isParked);
+  public void givenAVehicleAlreadyParked_WhenTryToParkAnotherVehicle_ShouldThrowException() {
+    try {
+      Vehicle vehicle = new Vehicle();
+      Vehicle vehicle1 = new Vehicle();
+      parkingLotSystem.park(vehicle);
+      parkingLotSystem.park(vehicle1);
+    } catch (ParkingLotException e) {
+      Assert.assertEquals("Parking Lot is Full", e.getMessage());
+      e.printStackTrace();
+    }
   }
-  
+
   /** UC2-Test to check the vehicle is unparked after calling unpark method */
   @Test
   public void givenAVehicle_WhenUnParked_ShouldReturnTrue() {
+    try {
       Vehicle vehicle = new Vehicle();
       parkingLotSystem.park(vehicle);
-      boolean isUnParked = parkingLotSystem.unPark(vehicle);
+      parkingLotSystem.unPark(vehicle);
+      boolean isUnParked = parkingLotSystem.isVehicleUnParked(vehicle);
       Assert.assertTrue(isUnParked);
+    } catch (ParkingLotException e) {
+      e.printStackTrace();
+    }
   }
 
   /** UC2 test 2 to check the vehicle is not parked but asking to unpark should return false */
   @Test
-  public void givenAVehicle_WhenTryToUnPark_WhenNotParked_ShouldreturnFalse() {
-    Vehicle vehicle = new Vehicle();
-    boolean isUnParked = parkingLotSystem.unPark(vehicle);
-    Assert.assertFalse(isUnParked);
+  public void givenAVehicle_WhenTryToUnPark_WhenNotParked_ShouldThrowException() {
+    try {
+      Vehicle vehicle = new Vehicle();
+      parkingLotSystem.unPark(vehicle);
+    } catch (ParkingLotException e) {
+      Assert.assertEquals("parking lot is empty", e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * UC2 parked one vehicle and asking to unpark different vehicle should throw exception
+   */
+  @Test
+  public void givenAVehicle_WhenTryToUnParkDifferentVehicle_ShouldThrowException() {
+    try {
+      Vehicle vehicle = new Vehicle();
+      Vehicle vehicle1 = new Vehicle();
+      parkingLotSystem.park(vehicle);
+      parkingLotSystem.unPark(vehicle1);
+    } catch (ParkingLotException e) {
+      Assert.assertEquals("Ask for correct vehicle", e.getMessage());
+      e.printStackTrace();
+    }
   }
 }
