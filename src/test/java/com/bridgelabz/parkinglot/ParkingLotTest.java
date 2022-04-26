@@ -1,6 +1,7 @@
 package com.bridgelabz.parkinglot;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -8,14 +9,19 @@ import org.junit.Test;
  * @since -> 25/04/2022
  */
 public class ParkingLotTest {
-    /*
-    UC1
-    Test to check the vehicle is parked
-      after calling park method
-     */
+  private ParkingLotSystem parkingLotSystem;
+  @Before
+  public void setUp() throws Exception {
+    parkingLotSystem = new ParkingLotSystem();
+  }
+
+  /*
+      UC1
+      Test to check the vehicle is parked
+        after calling park method
+       */
   @Test
   public void givenAVehicle_WhenParked_ShouldReturnTrue() {
-      ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
       boolean isParked = parkingLotSystem.park(new Vehicle());
       Assert.assertTrue(isParked);
   }
@@ -29,7 +35,6 @@ public class ParkingLotTest {
   public void givenAVehicleAlreadyParked_WhenTryToParkAnotherVehicle_ShouldReturnFalse() {
     Vehicle vehicle = new Vehicle();
     Vehicle vehicle1 = new Vehicle();
-    ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
     parkingLotSystem.park(vehicle);
     boolean isParked = parkingLotSystem.park(vehicle1);
     Assert.assertFalse(isParked);
@@ -39,7 +44,6 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicle_WhenUnParked_ShouldReturnTrue() {
       Vehicle vehicle = new Vehicle();
-      ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
       parkingLotSystem.park(vehicle);
       boolean isUnParked = parkingLotSystem.unPark(vehicle);
       Assert.assertTrue(isUnParked);
@@ -49,7 +53,6 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicle_WhenTryToUnPark_WhenNotParked_ShouldreturnFalse() {
     Vehicle vehicle = new Vehicle();
-    ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
     boolean isUnParked = parkingLotSystem.unPark(vehicle);
     Assert.assertFalse(isUnParked);
   }
