@@ -16,4 +16,14 @@ public class ParkingLotSystem {
     this.vehicle = vehicle;
     return true;
   }
+
+  /**
+   *
+   * @param vehicle
+   * @return if unparked return true else return false
+   */
+  public boolean unPark(Vehicle vehicle) {
+    if(this.vehicle.equals(vehicle)) return true;
+    return false;
+  }
 }
