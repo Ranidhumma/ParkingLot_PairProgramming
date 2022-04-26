@@ -23,6 +23,7 @@ public class ParkingLotSystem {
    * @return if unparked return true else return false
    */
   public boolean unPark(Vehicle vehicle) {
+    if(this.vehicle==null) return false;
     if(this.vehicle.equals(vehicle)) return true;
     return false;
   }

@@ -45,5 +45,12 @@ public class ParkingLotTest {
       Assert.assertTrue(isUnParked);
   }
 
-
+  /** UC2 test 2 to check the vehicle is not parked but asking to unpark should return false */
+  @Test
+  public void givenAVehicle_WhenTryToUnPark_WhenNotParked_ShouldreturnFalse() {
+    Vehicle vehicle = new Vehicle();
+    ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
+    boolean isUnParked = parkingLotSystem.unPark(vehicle);
+    Assert.assertFalse(isUnParked);
+  }
 }
