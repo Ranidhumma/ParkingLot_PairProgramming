@@ -77,9 +77,7 @@ public class ParkingLotTest {
     }
   }
 
-  /**
-   * UC2 parked one vehicle and asking to unpark different vehicle should throw exception
-   */
+  /** UC2 parked one vehicle and asking to unpark different vehicle should throw exception */
   @Test
   public void givenAVehicle_WhenTryToUnParkDifferentVehicle_ShouldThrowException() {
     try {
@@ -93,6 +91,9 @@ public class ParkingLotTest {
     }
   }
 
+  /**
+   * Test to check updating parkingLot Full message to owner
+   */
   @Test
   public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
     Vehicle vehicle = new Vehicle();
@@ -100,7 +101,23 @@ public class ParkingLotTest {
       parkingLotSystem.park(vehicle);
       Owner owner = new Owner();
       String status = owner.getStatus();
-      Assert.assertEquals("Parking Lot is Full",status);
+      Assert.assertEquals("Parking Lot is Full", status);
+    } catch (ParkingLotException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Test to check updating parkingLot Full message to Security Personnel
+   */
+  @Test
+  public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToSecurityPersonnel() {
+    Vehicle vehicle = new Vehicle();
+    try {
+      parkingLotSystem.park(vehicle);
+      SecurityPersonnel securityPersonnel = new SecurityPersonnel();
+      String status = securityPersonnel.getStatus();
+      Assert.assertEquals("Parking Lot is Full", status);
     } catch (ParkingLotException e) {
       e.printStackTrace();
     }

@@ -5,7 +5,8 @@ package com.bridgelabz.parkinglot;
  */
 public class ParkingLotSystem {
   private Vehicle vehicle;
-  public static Owner owner = new Owner();
+  public  Owner owner = new Owner();
+  public  SecurityPersonnel securityPersonnel  = new SecurityPersonnel();
 
   /**
    *
@@ -19,6 +20,8 @@ public class ParkingLotSystem {
     if(this.vehicle!=null){
       String message = "Parking Lot is Full";
       owner.update(message);
+      securityPersonnel.update(message);
+
     }
   }
 
