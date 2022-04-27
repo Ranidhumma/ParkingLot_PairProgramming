@@ -95,6 +95,7 @@ public class ParkingLotTest {
   public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
     try {
       parkingLotSystem.park(vehicle);
+      parkingLotSystem.park(new Vehicle());
       Owner owner = new Owner();
       String status = owner.getStatus();
       Assert.assertEquals("Parking Lot is Full", status);

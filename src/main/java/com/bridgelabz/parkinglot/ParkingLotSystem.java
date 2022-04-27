@@ -1,10 +1,15 @@
 package com.bridgelabz.parkinglot;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author -> Karthik M C,RaniDhumma
  * @since -> 25/04/2022
  */
 public class ParkingLotSystem {
-  private Vehicle vehicle;
+  private static final int MAX_PARKING_CAPACITY = 2;
+  private List<Vehicle> vehicles = new ArrayList<>();
   public  Owner owner = new Owner();
   public  SecurityPersonnel securityPersonnel  = new SecurityPersonnel();
 
@@ -14,10 +19,10 @@ public class ParkingLotSystem {
    * @throws ParkingLotException when parking lot is full
    */
   public void park(Vehicle vehicle) throws ParkingLotException {
-    if (this.vehicle != null)
+    if (this.vehicles.size()==MAX_PARKING_CAPACITY)
       throw new ParkingLotException("parking Lot is Full");
-    this.vehicle = vehicle;
-    if(this.vehicle!=null){
+    this.vehicles.add(vehicle);
+    if(this.vehicles.size()==MAX_PARKING_CAPACITY){
       String message = "Parking Lot is Full";
       owner.update(message);
       securityPersonnel.update(message);
@@ -31,7 +36,7 @@ public class ParkingLotSystem {
    * @return if vehicle is parked return true else return false
    */
   public boolean isVehicleParked(Vehicle vehicle) {
-    if(this.vehicle.equals(vehicle)) return true;
+    if(this.vehicles.contains(vehicle)) return true;
     return false;
   }
 
@@ -42,10 +47,10 @@ public class ParkingLotSystem {
    * asked for incorrect vehicle
    */
   public void unPark(Vehicle vehicle) throws ParkingLotException {
-    if(this.vehicle==null) throw new ParkingLotException("parking lot is empty");
-    if(this.vehicle.equals(vehicle)) {
-      this.vehicle=null;
-      if(this.vehicle==null) owner.update("Parkinglot has space");
+    if(this.vehicles.isEmpty()) throw new ParkingLotException("parking lot is empty");
+    if(this.vehicles.contains(vehicle)) {
+      this.vehicles.remove(vehicle);
+      if(this.vehicles.size()<MAX_PARKING_CAPACITY) owner.update("Parkinglot has space");
       return;
     }
     throw new ParkingLotException("Ask for correct vehicle");
@@ -57,7 +62,7 @@ public class ParkingLotSystem {
    * @return true if parking lot is empty return true else return false
    */
   public boolean isVehicleUnParked(Vehicle vehicle) {
-    if(this.vehicle==null) return true;
+    if(!this.vehicles.contains(vehicle)) return true;//checking for vehicle is unparked
     return false;
   }
 }
