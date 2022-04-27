@@ -5,6 +5,7 @@ package com.bridgelabz.parkinglot;
  */
 public class ParkingLotSystem {
   private Vehicle vehicle;
+  public static Owner owner = new Owner();
 
   /**
    *
@@ -12,8 +13,13 @@ public class ParkingLotSystem {
    * @throws ParkingLotException when parking lot is full
    */
   public void park(Vehicle vehicle) throws ParkingLotException {
-    if (this.vehicle != null) throw new ParkingLotException("Parking Lot is Full");
+    if (this.vehicle != null)
+      throw new ParkingLotException("parking Lot is Full");
     this.vehicle = vehicle;
+    if(this.vehicle!=null){
+      String message = "Parking Lot is Full";
+      owner.update(message);
+    }
   }
 
   /**

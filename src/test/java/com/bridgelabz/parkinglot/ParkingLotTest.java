@@ -29,7 +29,7 @@ public class ParkingLotTest {
       boolean isParked = parkingLotSystem.isVehicleParked(vehicle);
       Assert.assertTrue(isParked);
     } catch (ParkingLotException e) {
-//      e.printStackTrace();
+      e.printStackTrace();
     }
   }
 
@@ -89,6 +89,19 @@ public class ParkingLotTest {
       parkingLotSystem.unPark(vehicle1);
     } catch (ParkingLotException e) {
       Assert.assertEquals("Ask for correct vehicle", e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
+    Vehicle vehicle = new Vehicle();
+    try {
+      parkingLotSystem.park(vehicle);
+      Owner owner = new Owner();
+      String status = owner.getStatus();
+      Assert.assertEquals("Parking Lot is Full",status);
+    } catch (ParkingLotException e) {
       e.printStackTrace();
     }
   }
