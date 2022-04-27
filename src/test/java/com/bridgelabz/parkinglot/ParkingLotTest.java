@@ -10,10 +10,12 @@ import org.junit.Test;
  */
 public class ParkingLotTest {
   private ParkingLotSystem parkingLotSystem;
+  private Vehicle vehicle;
 
   @Before
   public void setUp() throws Exception {
     parkingLotSystem = new ParkingLotSystem();
+    vehicle = new Vehicle();
   }
 
   /*
@@ -24,7 +26,6 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicle_WhenParked_ShouldReturnTrue() {
     try {
-      Vehicle vehicle = new Vehicle();
       parkingLotSystem.park(vehicle);
       boolean isParked = parkingLotSystem.isVehicleParked(vehicle);
       Assert.assertTrue(isParked);
@@ -41,12 +42,11 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicleAlreadyParked_WhenTryToParkAnotherVehicle_ShouldThrowException() {
     try {
-      Vehicle vehicle = new Vehicle();
       Vehicle vehicle1 = new Vehicle();
       parkingLotSystem.park(vehicle);
       parkingLotSystem.park(vehicle1);
     } catch (ParkingLotException e) {
-      Assert.assertEquals("Parking Lot is Full", e.getMessage());
+      Assert.assertEquals("parking Lot is Full", e.getMessage());
       e.printStackTrace();
     }
   }
@@ -55,7 +55,6 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicle_WhenUnParked_ShouldReturnTrue() {
     try {
-      Vehicle vehicle = new Vehicle();
       parkingLotSystem.park(vehicle);
       parkingLotSystem.unPark(vehicle);
       boolean isUnParked = parkingLotSystem.isVehicleUnParked(vehicle);
@@ -69,7 +68,6 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicle_WhenTryToUnPark_WhenNotParked_ShouldThrowException() {
     try {
-      Vehicle vehicle = new Vehicle();
       parkingLotSystem.unPark(vehicle);
     } catch (ParkingLotException e) {
       Assert.assertEquals("parking lot is empty", e.getMessage());
@@ -81,7 +79,6 @@ public class ParkingLotTest {
   @Test
   public void givenAVehicle_WhenTryToUnParkDifferentVehicle_ShouldThrowException() {
     try {
-      Vehicle vehicle = new Vehicle();
       Vehicle vehicle1 = new Vehicle();
       parkingLotSystem.park(vehicle);
       parkingLotSystem.unPark(vehicle1);
@@ -96,7 +93,6 @@ public class ParkingLotTest {
    */
   @Test
   public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
-    Vehicle vehicle = new Vehicle();
     try {
       parkingLotSystem.park(vehicle);
       Owner owner = new Owner();
@@ -112,7 +108,6 @@ public class ParkingLotTest {
    */
   @Test
   public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToSecurityPersonnel() {
-    Vehicle vehicle = new Vehicle();
     try {
       parkingLotSystem.park(vehicle);
       SecurityPersonnel securityPersonnel = new SecurityPersonnel();
@@ -128,7 +123,6 @@ public class ParkingLotTest {
    */
   @Test
   public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
-    Vehicle vehicle = new Vehicle();
     try {
       parkingLotSystem.park(vehicle);
       parkingLotSystem.unPark(vehicle);
