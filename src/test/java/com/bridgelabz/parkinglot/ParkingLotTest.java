@@ -122,4 +122,21 @@ public class ParkingLotTest {
       e.printStackTrace();
     }
   }
+
+  /**
+   *Test to check updating parkingLot empty message to Security Personnel
+   */
+  @Test
+  public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
+    Vehicle vehicle = new Vehicle();
+    try {
+      parkingLotSystem.park(vehicle);
+      parkingLotSystem.unPark(vehicle);
+      Owner owner = new Owner();
+      String status = owner.getStatus();
+      Assert.assertEquals("Parkinglot has space", status);
+    } catch (ParkingLotException e) {
+      e.printStackTrace();
+    }
+  }
 }
