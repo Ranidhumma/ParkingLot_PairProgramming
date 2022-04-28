@@ -100,7 +100,7 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenParkingLotIsFull_ShouldGiveMessageToOwner() {
         try {
-            Owner owner = new Owner();
+            ParkingLotOwner owner = new ParkingLotOwner();
             parkingLotSystem.registerObservers(owner);
             parkingLotSystem.park(vehicle);
             parkingLotSystem.park(new Vehicle());
@@ -134,12 +134,22 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenParkingLotHasSpaceAgain_ShouldGiveMessageToOwner() {
         try {
-            Owner owner = new Owner();
+            ParkingLotOwner owner = new ParkingLotOwner();
             parkingLotSystem.registerObservers(owner);
             parkingLotSystem.park(vehicle);
             parkingLotSystem.unPark(vehicle);
             String status = owner.getStatus();
             Assert.assertEquals("Parkinglot has space", status);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void giveAttendant_WhenOwnerGivesTheSlotToParkTheVehicle_ShouldPark() {
+        Attendant attendant = new Attendant();
+        try {
+            parkingLotSystem.park(vehicle);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }

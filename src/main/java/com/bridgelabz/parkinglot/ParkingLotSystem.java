@@ -24,6 +24,7 @@ public class ParkingLotSystem {
    * @throws ParkingLotException when parking lot is full
    */
   public void park(Vehicle vehicle) throws ParkingLotException {
+    if(this.vehicles.contains(vehicle)) throw new ParkingLotException("vehicle is already there");
     if (this.vehicles.size()==MAX_PARKING_CAPACITY)
       throw new ParkingLotException("parking Lot is Full");
     this.vehicles.add(vehicle);

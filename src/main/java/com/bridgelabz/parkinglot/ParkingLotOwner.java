@@ -1,6 +1,6 @@
 package com.bridgelabz.parkinglot;
 
-public class Owner implements ParkingLotObserver {
+public class ParkingLotOwner implements ParkingLotObserver {
     private static String status;
 
     /**
