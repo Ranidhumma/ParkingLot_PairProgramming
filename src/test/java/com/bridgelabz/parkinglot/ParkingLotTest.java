@@ -104,6 +104,8 @@ public class ParkingLotTest {
             parkingLotSystem.registerObservers(owner);
             parkingLotSystem.park(vehicle);
             parkingLotSystem.park(new Vehicle(2,"car2"));
+            parkingLotSystem.park(new Vehicle(3,"car3"));
+            parkingLotSystem.park(new Vehicle(4,"car4"));
             String status = owner.getStatus();
             Assert.assertEquals("Parking Lot is Full", status);
         } catch (ParkingLotException e) {
@@ -121,6 +123,8 @@ public class ParkingLotTest {
             parkingLotSystem.registerObservers(securityPersonnel);
             parkingLotSystem.park(vehicle);
             parkingLotSystem.park(new Vehicle(2,"car2"));
+            parkingLotSystem.park(new Vehicle(3,"car2"));
+            parkingLotSystem.park(new Vehicle(4,"car2"));
             String status = securityPersonnel.getStatus();
             Assert.assertEquals("Parking Lot is Full", status);
         } catch (ParkingLotException e) {
@@ -146,10 +150,21 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void giveAttendant_WhenOwnerGivesTheSlotToParkTheVehicle_ShouldPark() {
+    public void givenAttendant_WhenOwnerGivesTheSlotToParkTheVehicle_ShouldPark() {
         Attendant attendant = new Attendant();
         try {
-            parkingLotSystem.park(vehicle);
+            ParkingLotOwner owner = new ParkingLotOwner();
+            parkingLotSystem.registerObservers(owner);
+            Vehicle alto = new Vehicle(1,"car1");
+            Vehicle etios = new Vehicle(2,"car2");
+            Vehicle brezza = new Vehicle(3,"car3");
+            Vehicle ertiga = new Vehicle(4,"car4");
+            parkingLotSystem.park(alto);
+            parkingLotSystem.park(etios);
+            parkingLotSystem.park(brezza);
+            parkingLotSystem.park(ertiga);
+            int vehicleLotNumber = parkingLotSystem.getVehicleLotNumber(etios);
+            Assert.assertEquals(2,vehicleLotNumber);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
