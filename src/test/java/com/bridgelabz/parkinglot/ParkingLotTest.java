@@ -15,7 +15,7 @@ public class ParkingLotTest {
     @Before
     public void setUp() throws Exception {
         parkingLotSystem = new ParkingLotSystem();
-        vehicle = new Vehicle();
+        vehicle = new Vehicle(1,"car1");
     }
 
     /*
@@ -42,7 +42,7 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicleAlreadyParked_WhenTryToParkAnotherVehicle_ShouldThrowException() {
         try {
-            Vehicle vehicle1 = new Vehicle();
+            Vehicle vehicle1 = new Vehicle(2,"car2");
             parkingLotSystem.park(vehicle);
             parkingLotSystem.park(vehicle1);
         } catch (ParkingLotException e) {
@@ -85,7 +85,7 @@ public class ParkingLotTest {
     @Test
     public void givenAVehicle_WhenTryToUnParkDifferentVehicle_ShouldThrowException() {
         try {
-            Vehicle vehicle1 = new Vehicle();
+            Vehicle vehicle1 = new Vehicle(2,"car2");
             parkingLotSystem.park(vehicle);
             parkingLotSystem.unPark(vehicle1);
         } catch (ParkingLotException e) {
@@ -103,7 +103,7 @@ public class ParkingLotTest {
             ParkingLotOwner owner = new ParkingLotOwner();
             parkingLotSystem.registerObservers(owner);
             parkingLotSystem.park(vehicle);
-            parkingLotSystem.park(new Vehicle());
+            parkingLotSystem.park(new Vehicle(2,"car2"));
             String status = owner.getStatus();
             Assert.assertEquals("Parking Lot is Full", status);
         } catch (ParkingLotException e) {
@@ -120,7 +120,7 @@ public class ParkingLotTest {
             SecurityPersonnel securityPersonnel = new SecurityPersonnel();
             parkingLotSystem.registerObservers(securityPersonnel);
             parkingLotSystem.park(vehicle);
-            parkingLotSystem.park(new Vehicle());
+            parkingLotSystem.park(new Vehicle(2,"car2"));
             String status = securityPersonnel.getStatus();
             Assert.assertEquals("Parking Lot is Full", status);
         } catch (ParkingLotException e) {
