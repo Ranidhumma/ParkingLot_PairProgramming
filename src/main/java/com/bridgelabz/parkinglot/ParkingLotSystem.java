@@ -10,8 +10,13 @@ import java.util.List;
 public class ParkingLotSystem {
   private static final int MAX_PARKING_CAPACITY = 2;
   private List<Vehicle> vehicles = new ArrayList<>();
-  public  Owner owner = new Owner();
-  public  SecurityPersonnel securityPersonnel  = new SecurityPersonnel();
+
+  List<ParkingLotObserver> observers;
+
+
+  public ParkingLotSystem() {
+    observers =new ArrayList<>();
+  }
 
   /**
    *
@@ -24,8 +29,11 @@ public class ParkingLotSystem {
     this.vehicles.add(vehicle);
     if(this.vehicles.size()==MAX_PARKING_CAPACITY){
       String message = "Parking Lot is Full";
-      owner.update(message);
-      securityPersonnel.update(message);
+      for(ParkingLotObserver observer:observers){
+        observer.update(message);
+      }
+//      owner.update(message);
+//      securityPersonnel.update(message);
 
     }
   }
@@ -50,7 +58,12 @@ public class ParkingLotSystem {
     if(this.vehicles.isEmpty()) throw new ParkingLotException("parking lot is empty");
     if(this.vehicles.contains(vehicle)) {
       this.vehicles.remove(vehicle);
-      if(this.vehicles.size()<MAX_PARKING_CAPACITY) owner.update("Parkinglot has space");
+      if(this.vehicles.size()<MAX_PARKING_CAPACITY) {
+        for(ParkingLotObserver observer:observers){
+          observer.update("Parkinglot has space");
+        }
+
+      }
       return;
     }
     throw new ParkingLotException("Ask for correct vehicle");
@@ -64,5 +77,9 @@ public class ParkingLotSystem {
   public boolean isVehicleUnParked(Vehicle vehicle) {
     if(!this.vehicles.contains(vehicle)) return true;//checking for vehicle is unparked
     return false;
+  }
+
+  public void registerObservers(ParkingLotObserver observer) {
+    this.observers.add(observer);
   }
 }

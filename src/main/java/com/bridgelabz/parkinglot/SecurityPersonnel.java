@@ -1,6 +1,6 @@
 package com.bridgelabz.parkinglot;
 
-public class SecurityPersonnel {
+public class SecurityPersonnel implements ParkingLotObserver {
     private static String status;
 
     /**
