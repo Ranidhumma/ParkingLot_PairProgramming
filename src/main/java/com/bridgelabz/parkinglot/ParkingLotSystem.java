@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class ParkingLotSystem {
   private static final int MAX_PARKING_CAPACITY = 4;
-  private Map<Integer,Vehicle> parkingLotMap ;
+  private Map<Integer,Vehicle> parkingLotMap = new LinkedHashMap<>(); ;
 
   List<ParkingLotObserver> observers;
   Attendant attendant = new Attendant();
@@ -19,7 +19,9 @@ public class ParkingLotSystem {
 
   public ParkingLotSystem() {
     observers =new ArrayList<>();
-    parkingLotMap = new LinkedHashMap<>();
+    for(int i=1;i<=MAX_PARKING_CAPACITY;i++){
+      parkingLotMap.put(i,null);
+    }
   }
 
   /**
@@ -31,15 +33,17 @@ public class ParkingLotSystem {
     if(this.parkingLotMap.containsValue(vehicle))
       throw new ParkingLotException("vehicle is already there");
 
-    if (this.parkingLotMap.size()==MAX_PARKING_CAPACITY)
+    if (this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null))
       throw new ParkingLotException("parking Lot is Full");
 
-    if(parkingLotMap.size()<MAX_PARKING_CAPACITY) {
+//    if(parkingLotMap.size()<MAX_PARKING_CAPACITY) {
+    if(this.parkingLotMap.containsValue(null)) {
       int key = attendant.parkThevehicle(parkingLotMap);
       this.parkingLotMap.put(key, vehicle);
+//    }
     }
 
-    if(this.parkingLotMap.size()==MAX_PARKING_CAPACITY){
+    if(this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null)){
       String message = "Parking Lot is Full";
       for(ParkingLotObserver observer:observers){
         observer.update(message);
@@ -68,15 +72,21 @@ public class ParkingLotSystem {
    */
   public void unPark(Vehicle vehicle) throws ParkingLotException {
     Integer key=0;
-    if(this.parkingLotMap.isEmpty()) throw new ParkingLotException("parking lot is empty");
+    int nullCount = 0;
+    for(Map.Entry map : parkingLotMap.entrySet()){
+      if(map.getValue()==null)
+        nullCount++;
+    }
+    if(nullCount==MAX_PARKING_CAPACITY) throw new ParkingLotException("parking lot is empty");
     if(this.parkingLotMap.containsValue(vehicle)) {
       for(Map.Entry map : parkingLotMap.entrySet()){
         if(map.getValue()==vehicle){
           key= (Integer) map.getKey();
         }
       }
-      this.parkingLotMap.remove(key);
-      if(this.parkingLotMap.size()<MAX_PARKING_CAPACITY) {
+//      this.parkingLotMap.remove(key);
+      this.parkingLotMap.put(key,null);
+      if(this.parkingLotMap.containsValue(null)) {
         for(ParkingLotObserver observer:observers){
           observer.update("Parkinglot has space");
         }
@@ -107,5 +117,14 @@ public class ParkingLotSystem {
         return (int) map.getKey();
     }
     return 0;
+  }
+
+  /**
+   *
+   * @param vehicle
+   * @return vehicle location in the parking lot
+   */
+  public int getVehicleLoacation(Vehicle vehicle) {
+    return getVehicleLotNumber(vehicle);
   }
 }

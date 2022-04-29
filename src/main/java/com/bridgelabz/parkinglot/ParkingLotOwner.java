@@ -24,12 +24,20 @@ public class ParkingLotOwner implements ParkingLotObserver {
     }
 
     public int getKeyToPark(Map<Integer, Vehicle> parkingLotMap) {
-        lotNumber=1;
-        if(parkingLotMap.isEmpty()) this.key=lotNumber;
+//        lotNumber=1;
+//        if(parkingLotMap.isEmpty()) this.key=lotNumber;
+//        for(Map.Entry map : parkingLotMap.entrySet()){
+//            lotNumber++;
+//        }
+//        this.key=lotNumber;
+//        return this.key;
+
         for(Map.Entry map : parkingLotMap.entrySet()){
-            lotNumber++;
+            if(map.getValue()==null) {
+                this.key = (int) map.getKey();
+                break;
+            }
         }
-        this.key=lotNumber;
         return this.key;
     }
 }
