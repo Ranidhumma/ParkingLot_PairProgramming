@@ -35,17 +35,13 @@ public class ParkingLotSystem {
   public void park(Vehicle vehicle) throws ParkingLotException {
     if(this.parkingLotMap.containsValue(vehicle))
       throw new ParkingLotException("vehicle is already there");
-
     if (this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null))
       throw new ParkingLotException("parking Lot is Full");
-
-//    if(parkingLotMap.size()<MAX_PARKING_CAPACITY) {
     if(this.parkingLotMap.containsValue(null)) {
       int key = attendant.parkThevehicle(parkingLotMap);
       this.parkingLotMap.put(key, vehicle);
       LocalDateTime localDateTime = LocalDateTime.now();
       setParkedTime(localDateTime);
-//    }
     }
 
     if(this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null)){
@@ -102,7 +98,6 @@ public class ParkingLotSystem {
           key= (Integer) map.getKey();
         }
       }
-//      this.parkingLotMap.remove(key);
       this.parkingLotMap.put(key,null);
       if(this.parkingLotMap.containsValue(null)) {
         for(ParkingLotObserver observer:observers){
@@ -145,6 +140,4 @@ public class ParkingLotSystem {
   public int getVehicleLoacation(Vehicle vehicle) {
     return getVehicleLotNumber(vehicle);
   }
-
-
 }
