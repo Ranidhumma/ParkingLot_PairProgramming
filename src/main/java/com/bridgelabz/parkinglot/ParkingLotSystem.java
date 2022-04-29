@@ -1,5 +1,6 @@
 package com.bridgelabz.parkinglot;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ public class ParkingLotSystem {
 
   List<ParkingLotObserver> observers;
   Attendant attendant = new Attendant();
+  private LocalDateTime time;
+
 
 
   public ParkingLotSystem() {
@@ -40,6 +43,8 @@ public class ParkingLotSystem {
     if(this.parkingLotMap.containsValue(null)) {
       int key = attendant.parkThevehicle(parkingLotMap);
       this.parkingLotMap.put(key, vehicle);
+      LocalDateTime localDateTime = LocalDateTime.now();
+      setParkedTime(localDateTime);
 //    }
     }
 
@@ -48,10 +53,23 @@ public class ParkingLotSystem {
       for(ParkingLotObserver observer:observers){
         observer.update(message);
       }
-//      owner.update(message);
-//      securityPersonnel.update(message);
-
     }
+  }
+
+  /**
+   *
+   * @param time
+   */
+  public void setParkedTime(LocalDateTime time) {
+    this.time = time;
+  }
+
+  /**
+   *
+   * @return Local time
+   */
+  public LocalDateTime getParkedTime() {
+    return this.time;
   }
 
   /**
@@ -127,4 +145,6 @@ public class ParkingLotSystem {
   public int getVehicleLoacation(Vehicle vehicle) {
     return getVehicleLotNumber(vehicle);
   }
+
+
 }

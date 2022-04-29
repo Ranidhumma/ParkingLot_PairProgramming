@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 /**
  * @author -> Karthik M C,RaniDhumma
  * @since -> 25/04/2022
@@ -175,6 +177,7 @@ public class ParkingLotTest {
     }
 
     /**
+     * UC7
      * Test for checking finding the location of given vehicle for driver
      * @throws ParkingLotException
      */
@@ -182,15 +185,29 @@ public class ParkingLotTest {
     public void givenVehicle_WhenFindVehicle_ShouldReturnKey() throws ParkingLotException {
         Vehicle v1 = new Vehicle(1, "alto");
         Vehicle v2 = new Vehicle(2, "brezza");
-        Vehicle v3 = new Vehicle(3, "brezz1");
+        Vehicle v3 = new Vehicle(3, "creta");
         parkingLotSystem.park(v1);
         parkingLotSystem.park(v2);
-        parkingLotSystem.unPark(v2);
+        parkingLotSystem.unPark(v1);
         parkingLotSystem.park(v3);
 
         int key = parkingLotSystem.getVehicleLoacation(v3);
-        Assert.assertEquals(2, key);
+        Assert.assertEquals(1, key);
     }
 
-
+    /**
+     * UC8 as a parking lot owner I want to know when the car was parked
+     * on my lot
+     */
+    @Test
+    public void givenAVehicle_WhenParked_ShouldReturnTimeOfParking() {
+        try {
+            Vehicle alto = new Vehicle(1,"car1");
+            parkingLotSystem.park(alto);
+            LocalDateTime localDateTime = LocalDateTime.now();
+            Assert.assertEquals(localDateTime,parkingLotSystem.getParkedTime());
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
+    }
 }
