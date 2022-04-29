@@ -149,6 +149,10 @@ public class ParkingLotTest {
         }
     }
 
+
+    /**
+     * test to check owner has to generate the key for attendant to park the car
+     */
     @Test
     public void givenAttendant_WhenOwnerGivesTheSlotToParkTheVehicle_ShouldPark() {
         Attendant attendant = new Attendant();
@@ -169,4 +173,24 @@ public class ParkingLotTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Test for checking finding the location of given vehicle for driver
+     * @throws ParkingLotException
+     */
+    @Test
+    public void givenVehicle_WhenFindVehicle_ShouldReturnKey() throws ParkingLotException {
+        Vehicle v1 = new Vehicle(1, "alto");
+        Vehicle v2 = new Vehicle(2, "brezza");
+        Vehicle v3 = new Vehicle(3, "brezz1");
+        parkingLotSystem.park(v1);
+        parkingLotSystem.park(v2);
+        parkingLotSystem.unPark(v2);
+        parkingLotSystem.park(v3);
+
+        int key = parkingLotSystem.getVehicleLoacation(v3);
+        Assert.assertEquals(2, key);
+    }
+
+
 }
