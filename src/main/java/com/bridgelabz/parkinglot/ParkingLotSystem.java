@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class ParkingLotSystem {
   private static final int MAX_PARKING_CAPACITY = 4;
-  private Map<Integer,Vehicle> parkingLotMap = new LinkedHashMap<>(); ;
+  private Map<Integer,Vehicle> parkingLotMap = new LinkedHashMap<>();
 
   List<ParkingLotObserver> observers;
   Attendant attendant = new Attendant();
@@ -28,22 +28,20 @@ public class ParkingLotSystem {
   }
 
   /**
-   *
    * @param vehicle
    * @throws ParkingLotException when parking lot is full
    */
-  public void park(Vehicle vehicle) throws ParkingLotException {
+  public void park(Vehicle vehicle, DriverType driverType) throws ParkingLotException {
     if(this.parkingLotMap.containsValue(vehicle))
       throw new ParkingLotException("vehicle is already there");
     if (this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null))
       throw new ParkingLotException("parking Lot is Full");
     if(this.parkingLotMap.containsValue(null)) {
       int key = attendant.parkThevehicle(parkingLotMap);
-      this.parkingLotMap.put(key, vehicle);
+      this.parkingLotMap.put(key+driverType.startingLot, vehicle);
       LocalDateTime localDateTime = LocalDateTime.now();
       setParkedTime(localDateTime);
     }
-
     if(this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null)){
       String message = "Parking Lot is Full";
       for(ParkingLotObserver observer:observers){
@@ -51,6 +49,8 @@ public class ParkingLotSystem {
       }
     }
   }
+
+
 
   /**
    *
@@ -140,4 +140,6 @@ public class ParkingLotSystem {
   public int getVehicleLoacation(Vehicle vehicle) {
     return getVehicleLotNumber(vehicle);
   }
+
+
 }
