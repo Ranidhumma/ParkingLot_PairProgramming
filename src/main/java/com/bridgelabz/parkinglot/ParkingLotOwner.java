@@ -23,18 +23,5 @@ public class ParkingLotOwner implements ParkingLotObserver {
         return this.status;
     }
 
-    /**
-     *
-     * @param parkingLotMap
-     * @return key for evenly distribution
-     */
-    public int getKeyToPark(Map<Integer, Vehicle> parkingLotMap) {
-        for(Map.Entry map : parkingLotMap.entrySet()){
-            if(map.getValue()==null) {
-                this.key = (int) map.getKey();//finds the key where the lot is empty
-                break;//breaks after finding evenly parked key
-            }
-        }
-        return this.key;
-    }
+
 }

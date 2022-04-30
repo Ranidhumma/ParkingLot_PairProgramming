@@ -127,6 +127,13 @@ public class ParkingLotTest {
             parkingLotSystem.park(new Vehicle(2,"car2"), DriverType.NORMAL);
             parkingLotSystem.park(new Vehicle(3,"car2"), DriverType.NORMAL);
             parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
+            parkingLotSystem.park(new Vehicle(4,"car2"), DriverType.NORMAL);
             String status = securityPersonnel.getStatus();
             Assert.assertEquals("Parking Lot is Full", status);
         } catch (ParkingLotException e) {
@@ -170,7 +177,7 @@ public class ParkingLotTest {
             parkingLotSystem.park(brezza, DriverType.NORMAL);
             parkingLotSystem.park(ertiga, DriverType.NORMAL);
             int vehicleLotNumber = parkingLotSystem.getVehicleLotNumber(etios);
-            Assert.assertEquals(2,vehicleLotNumber);
+            Assert.assertEquals(7,vehicleLotNumber);
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
@@ -192,7 +199,7 @@ public class ParkingLotTest {
         parkingLotSystem.park(v3, DriverType.NORMAL);
 
         int key = parkingLotSystem.getVehicleLoacation(v3);
-        Assert.assertEquals(1, key);
+        Assert.assertEquals(6, key);
     }
 
     /**
@@ -223,7 +230,7 @@ public class ParkingLotTest {
         Vehicle creta = new Vehicle(3, "creta");
         try {
             parkingLotSystem.park(alto,DriverType.NORMAL);
-            parkingLotSystem.park(brezza,DriverType.HANDICAP);
+            parkingLotSystem.park(brezza,DriverType.NORMAL);
             parkingLotSystem.park(creta,DriverType.HANDICAP);
             int altoLot = parkingLotSystem.getVehicleLoacation(alto);
             int brezzaLot = parkingLotSystem.getVehicleLoacation(brezza);

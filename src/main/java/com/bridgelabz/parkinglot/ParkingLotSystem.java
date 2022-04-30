@@ -41,10 +41,11 @@ public class ParkingLotSystem {
     if (this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null))
       throw new ParkingLotException("parking Lot is Full");
     if(this.parkingLotMap.containsValue(null)) {
-      int key = attendant.parkThevehicle(parkingLotMap);
-      this.parkingLotMap.put(key+driverType.startingLot, vehicle);
+      int key = attendant.parkThevehicle(parkingLotMap,driverType);
+      this.parkingLotMap.put(key, vehicle);
+      int i = key + driverType.startingLot;
       if(parkingLotMap.size()>MAX_PARKING_CAPACITY){
-        this.parkingLotMap.put(key+driverType.startingLot, null);
+        this.parkingLotMap.put(key, null);
         throw new ParkingLotException("parking Lot size is outOfBound");
       }
       LocalDateTime localDateTime = LocalDateTime.now();
