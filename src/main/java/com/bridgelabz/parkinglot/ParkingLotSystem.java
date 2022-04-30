@@ -11,7 +11,7 @@ import java.util.Map;
  * @since -> 25/04/2022
  */
 public class ParkingLotSystem {
-  private static final int MAX_PARKING_CAPACITY = 4;
+  public  final int MAX_PARKING_CAPACITY = 10;
   private Map<Integer,Vehicle> parkingLotMap = new LinkedHashMap<>();
 
   List<ParkingLotObserver> observers;
@@ -32,13 +32,21 @@ public class ParkingLotSystem {
    * @throws ParkingLotException when parking lot is full
    */
   public void park(Vehicle vehicle, DriverType driverType) throws ParkingLotException {
+    int nullCount=0;
     if(this.parkingLotMap.containsValue(vehicle))
       throw new ParkingLotException("vehicle is already there");
+      for(Map.Entry map : parkingLotMap.entrySet()){
+        if(map.getValue()==null) nullCount++;
+      }
     if (this.parkingLotMap.size()==MAX_PARKING_CAPACITY && !parkingLotMap.containsValue(null))
       throw new ParkingLotException("parking Lot is Full");
     if(this.parkingLotMap.containsValue(null)) {
       int key = attendant.parkThevehicle(parkingLotMap);
       this.parkingLotMap.put(key+driverType.startingLot, vehicle);
+      if(parkingLotMap.size()>MAX_PARKING_CAPACITY){
+        this.parkingLotMap.put(key+driverType.startingLot, null);
+        throw new ParkingLotException("parking Lot size is outOfBound");
+      }
       LocalDateTime localDateTime = LocalDateTime.now();
       setParkedTime(localDateTime);
     }
@@ -142,4 +150,7 @@ public class ParkingLotSystem {
   }
 
 
+  public int getParkingMapSize() {
+    return parkingLotMap.size();
+  }
 }

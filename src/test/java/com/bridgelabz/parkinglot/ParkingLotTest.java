@@ -232,6 +232,7 @@ public class ParkingLotTest {
             Assert.assertEquals(1,brezzaLot);
             Assert.assertEquals(2,cretaLot);
         } catch (ParkingLotException e) {
+            Assert.assertTrue(parkingLotSystem.getParkingMapSize()<= parkingLotSystem.MAX_PARKING_CAPACITY);
             e.printStackTrace();
         }
     }
