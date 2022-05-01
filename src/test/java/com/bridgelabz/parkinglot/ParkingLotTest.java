@@ -304,4 +304,30 @@ public class ParkingLotTest {
         List<Integer> actualLotNumerList = parkingLotSystem.getVehicleLotNumberByColor("white");
         Assert.assertEquals(expectedLotNumberList,actualLotNumerList);
     }
+
+    /**
+     * UC13
+     * Test to get get lot number and number plate details of blue toyota
+     * @throws ParkingLotException
+     */
+    @Test
+    public void givenAParkingLot_WhenBlueToyotaFound_ShouldReturnLocationAndPlateNumber() throws ParkingLotException {
+        Vehicle car1 = new Vehicle(1,"alto","blue","KA-16-W5118");
+        Vehicle car2 = new Vehicle(2, "toyota","blue","KA-17-W5228");
+        Vehicle car3 = new Vehicle(3, "toyota","blue","MH-21-W5338");
+        Vehicle car4 = new Vehicle(4, "toyota","white","MH-25-W5668");
+
+        parkingLotSystem.park(car1,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(car2,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(car3,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(car4,DriverType.NORMAL,CarType.SMALL);
+
+        List<Integer> lotNumberList = parkingLotSystem.getVehicleLotNumberByColorAndModelName("blue", "toyota");
+        Assert.assertEquals(Arrays.asList(7,8),lotNumberList);
+        List<String> vehicleNumberPlate = parkingLotSystem.getVehicleNumberPlate(lotNumberList);
+        Assert.assertEquals(Arrays.asList("KA-17-W5228","MH-21-W5338"),vehicleNumberPlate);
+        int key = parkingLotSystem.getVehicleLoacation(car2);
+        String vehicleNumberPlateBylotNumber = parkingLotSystem.getVehicleNumberPlateBylotNumber(key);
+        Assert.assertEquals("KA-17-W5228",vehicleNumberPlateBylotNumber);
+    }
 }

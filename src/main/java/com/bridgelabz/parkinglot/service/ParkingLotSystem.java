@@ -61,8 +61,8 @@ public class ParkingLotSystem {
         }
         if (this.parkingLotMap.size() == MAX_PARKING_CAPACITY && !this.parkingLotMap.containsValue(null)) {
             for (ParkingLotObserver observer : observers) {
-                if(parkingLotMap.equals(parkingLotMap1))//check for parkinglot1
-                observer.update("ParkingLot 1 is Full");
+                if (parkingLotMap.equals(parkingLotMap1))//check for parkinglot1
+                    observer.update("ParkingLot 1 is Full");
                 else if (parkingLotMap.equals(parkingLotMap2)) //check for parkinglot2
                     observer.update("ParkingLot 2 is Full");
             }
@@ -89,10 +89,10 @@ public class ParkingLotSystem {
      * @return if vehicle is parked return true else return false
      */
     public boolean isVehicleParked(Vehicle vehicle) {
-        if(parkingLotMap1.containsValue(vehicle))
-            parkingLotMap=parkingLotMap1;
+        if (parkingLotMap1.containsValue(vehicle))
+            parkingLotMap = parkingLotMap1;
         if (parkingLotMap2.containsValue(vehicle))
-            parkingLotMap=parkingLotMap2;
+            parkingLotMap = parkingLotMap2;
         if (this.parkingLotMap.containsValue(vehicle)) return true;
         return false;
     }
@@ -175,26 +175,29 @@ public class ParkingLotSystem {
 
     /**
      * Method to find the list of vehicles having color provided
+     *
      * @param color
      * @return returns the vehicle list of color matched vehicles
      */
     public List<Vehicle> getVehicleByColor(String color) {
         List<Vehicle> carList = mapValuesTolist(parkingLotMap1);
         return carList.stream()
-                .filter(car->car!=null && car.getColor().equals(color))
+                .filter(car -> car != null && car.getColor().equals(color))
                 .collect(Collectors.toList());
     }
+
     /**
      * Method to find the lot no of vehicles having color provided
+     *
      * @param color
      * @return returns the lotNumber list of color matched vehicles
      */
     public List<Integer> getVehicleLotNumberByColor(String color) {
         List<Integer> lotList = new ArrayList<>();
         List<Vehicle> carList = new ArrayList<>();
-        for(int key=1;key<=parkingLotMap1.size();key++){
-            if(parkingLotMap1.get(key)!=null)
-                if(parkingLotMap1.get(key).getColor()==color)
+        for (int key = 1; key <= parkingLotMap1.size(); key++) {
+            if (parkingLotMap1.get(key) != null)
+                if (parkingLotMap1.get(key).getColor() == color)
                     lotList.add(key);
         }
         return lotList;
@@ -202,10 +205,42 @@ public class ParkingLotSystem {
 
     /**
      * method to convert map to list
+     *
      * @param map
      * @return
      */
-    static public List<Vehicle> mapValuesTolist(Map<Integer,Vehicle> map){
-       return new ArrayList<>(map.values());
+    static public List<Vehicle> mapValuesTolist(Map<Integer, Vehicle> map) {
+        return new ArrayList<>(map.values());
+    }
+
+    /**
+     * @param color
+     * @param modelName
+     * @return list of lot number of cars by using color and modelName
+     */
+    public List<Integer> getVehicleLotNumberByColorAndModelName(String color, String modelName) {
+        List<Integer> lotList = new ArrayList<>();
+        for (int key = 1; key <= parkingLotMap1.size(); key++) {
+            if (parkingLotMap1.get(key) != null)
+                if (parkingLotMap1.get(key).getColor() == color && parkingLotMap1.get(key).getModelName() == modelName)
+                    lotList.add(key);
+        }
+        return lotList;
+    }
+
+    public List<String> getVehicleNumberPlate(List<Integer> lotNumberList) {
+        List<String> numPlateList = new ArrayList<>();
+        for (int i = 0; i < lotNumberList.size(); i++) {
+//            for(int key = 1;key<=parkingLotMap1.size();key++){
+//                if(lotNumberList.get(i)==key)
+//                    numPlateList.add(parkingLotMap1.get(key).getNumPlate());
+//            }
+            numPlateList.add(parkingLotMap1.get(lotNumberList.get(i)).getNumPlate());
+        }
+        return numPlateList;
+    }
+
+    public String getVehicleNumberPlateBylotNumber(int key) {
+        return parkingLotMap1.get(key).getNumPlate();
     }
 }
