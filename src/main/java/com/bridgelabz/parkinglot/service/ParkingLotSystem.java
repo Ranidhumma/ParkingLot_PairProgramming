@@ -193,7 +193,6 @@ public class ParkingLotSystem {
      */
     public List<Integer> getVehicleLotNumberByColor(String color) {
         List<Integer> lotList = new ArrayList<>();
-        List<Vehicle> carList = new ArrayList<>();
         for (int key = 1; key <= parkingLotMap1.size(); key++) {
             if (parkingLotMap1.get(key) != null)
                 if (parkingLotMap1.get(key).getColor() == color)
@@ -247,5 +246,19 @@ public class ParkingLotSystem {
      */
     public String getVehicleNumberPlateBylotNumber(int key) {
         return parkingLotMap1.get(key).getNumPlate();
+    }
+
+    /**
+     *
+     * @param modelName
+     * @return list of bmw cars
+     */
+    public List<Vehicle> getVehicleFromModelName(String modelName) {
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList=mapValuesTolist(parkingLotMap1);
+        return vehicleList.stream()
+                .filter(vehicle -> vehicle!=null)
+                .filter(vehicle->vehicle.getModelName()==modelName)
+                .collect(Collectors.toList());
     }
 }

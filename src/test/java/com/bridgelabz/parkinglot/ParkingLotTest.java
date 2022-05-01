@@ -330,4 +330,26 @@ public class ParkingLotTest {
         String vehicleNumberPlateBylotNumber = parkingLotSystem.getVehicleNumberPlateBylotNumber(key);
         Assert.assertEquals("KA-17-W5228",vehicleNumberPlateBylotNumber);
     }
+
+    /**
+     * UC14 Test to check bmw cars in the lot
+     * @throws ParkingLotException
+     */
+    @Test
+    public void givenAParkingLot_WhenBMWFound_ShouldReturnVehicleDetails() throws ParkingLotException {
+        Vehicle car1 = new Vehicle(1,"BMW","blue","KA-16-W5118");
+        Vehicle car2 = new Vehicle(2, "toyota","blue","KA-17-W5228");
+        Vehicle car3 = new Vehicle(3, "BMW","blue","MH-21-W5338");
+        Vehicle car4 = new Vehicle(4, "toyota","white","MH-25-W5668");
+
+        parkingLotSystem.park(car1,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(car2,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(car3,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(car4,DriverType.NORMAL,CarType.SMALL);
+
+        List<Vehicle> vehicleList = Arrays.asList(car1, car3);
+        List<Vehicle> bmwList = parkingLotSystem.getVehicleFromModelName("BMW");
+
+        Assert.assertEquals(vehicleList,bmwList);
+    }
 }
