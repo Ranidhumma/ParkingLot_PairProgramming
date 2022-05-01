@@ -1,10 +1,21 @@
 package com.bridgelabz.parkinglot;
 
+import com.bridgelabz.parkinglot.entity.Attendant;
+import com.bridgelabz.parkinglot.entity.ParkingLotOwner;
+import com.bridgelabz.parkinglot.entity.SecurityPersonnel;
+import com.bridgelabz.parkinglot.entity.Vehicle;
+import com.bridgelabz.parkinglot.enums.CarType;
+import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.service.ParkingLotSystem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author -> Karthik M C,RaniDhumma
@@ -256,8 +267,6 @@ public class ParkingLotTest {
         Vehicle brezza = new Vehicle(2, "brezza");
         Vehicle creta = new Vehicle(3, "creta");
         Vehicle ertiga = new Vehicle(4, "ertiga");
-
-
         try {
             parkingLotSystem.park(alto,DriverType.NORMAL,CarType.SMALL);
             parkingLotSystem.park(creta,DriverType.NORMAL,CarType.SMALL);
@@ -272,5 +281,27 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *UC12 to give details of car to police officer having white colour
+     * @throws ParkingLotException
+     */
+    @Test
+    public void givenAParkingLot_WhenWhiteCarsFound_ShouldInformPoliceDepartment() throws ParkingLotException {
+        Vehicle alto = new Vehicle(1,"alto","white");
+        Vehicle brezza = new Vehicle(2, "brezza","red");
+        Vehicle creta = new Vehicle(3, "creta","white");
+        Vehicle ertiga = new Vehicle(4, "ertiga","white");
+        List<Vehicle> expectedList = new ArrayList<>(Arrays.asList(ertiga,alto,creta));
+        List<Integer> expectedLotNumberList = new ArrayList<>(Arrays.asList(1,6,7));
+        parkingLotSystem.park(alto,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(creta,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(brezza,DriverType.NORMAL,CarType.SMALL);
+        parkingLotSystem.park(ertiga,DriverType.HANDICAP,CarType.SMALL);
+        List<Vehicle> actualList = parkingLotSystem.getVehicleByColor("white");
+        Assert.assertEquals(expectedList,actualList);
+        List<Integer> actualLotNumerList = parkingLotSystem.getVehicleLotNumberByColor("white");
+        Assert.assertEquals(expectedLotNumberList,actualLotNumerList);
     }
 }

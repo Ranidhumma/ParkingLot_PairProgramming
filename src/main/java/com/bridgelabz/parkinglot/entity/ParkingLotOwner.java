@@ -1,4 +1,6 @@
-package com.bridgelabz.parkinglot;
+package com.bridgelabz.parkinglot.entity;
+
+import com.bridgelabz.parkinglot.ParkingLotObserver;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.bridgelabz.parkinglot;
+package com.bridgelabz.parkinglot.enums;
 
 public enum DriverType {
     NORMAL(5),HANDICAP(0);
