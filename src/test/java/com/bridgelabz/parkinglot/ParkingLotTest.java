@@ -312,10 +312,10 @@ public class ParkingLotTest {
      */
     @Test
     public void givenAParkingLot_WhenBlueToyotaFound_ShouldReturnLocationAndPlateNumber() throws ParkingLotException {
-        Vehicle car1 = new Vehicle(1,"alto","blue","KA-16-W5118");
-        Vehicle car2 = new Vehicle(2, "toyota","blue","KA-17-W5228");
-        Vehicle car3 = new Vehicle(3, "toyota","blue","MH-21-W5338");
-        Vehicle car4 = new Vehicle(4, "toyota","white","MH-25-W5668");
+        Vehicle car1 = new Vehicle(1,"alto","blue","KA-16-W5118");//6
+        Vehicle car2 = new Vehicle(2, "toyota","blue","KA-17-W5228");//7
+        Vehicle car3 = new Vehicle(3, "toyota","blue","MH-21-W5338");//8
+        Vehicle car4 = new Vehicle(4, "toyota","white","MH-25-W5668");//9
 
         parkingLotSystem.park(car1,DriverType.NORMAL,CarType.SMALL);
         parkingLotSystem.park(car2,DriverType.NORMAL,CarType.SMALL);
@@ -324,7 +324,7 @@ public class ParkingLotTest {
 
         List<Integer> lotNumberList = parkingLotSystem.getVehicleLotNumberByColorAndModelName("blue", "toyota");
         Assert.assertEquals(Arrays.asList(7,8),lotNumberList);
-        List<String> vehicleNumberPlate = parkingLotSystem.getVehicleNumberPlate(lotNumberList);
+        List<String> vehicleNumberPlate = parkingLotSystem.getVehicleNumberPlateFromLotList(lotNumberList);
         Assert.assertEquals(Arrays.asList("KA-17-W5228","MH-21-W5338"),vehicleNumberPlate);
         int key = parkingLotSystem.getVehicleLoacation(car2);
         String vehicleNumberPlateBylotNumber = parkingLotSystem.getVehicleNumberPlateBylotNumber(key);

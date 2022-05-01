@@ -7,7 +7,6 @@ import com.bridgelabz.parkinglot.enums.CarType;
 import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 
-import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -228,18 +227,24 @@ public class ParkingLotSystem {
         return lotList;
     }
 
-    public List<String> getVehicleNumberPlate(List<Integer> lotNumberList) {
+    /**
+     *
+     * @param lotNumberList
+     * @return list of numberplates
+     */
+    public List<String> getVehicleNumberPlateFromLotList(List<Integer> lotNumberList) {
         List<String> numPlateList = new ArrayList<>();
         for (int i = 0; i < lotNumberList.size(); i++) {
-//            for(int key = 1;key<=parkingLotMap1.size();key++){
-//                if(lotNumberList.get(i)==key)
-//                    numPlateList.add(parkingLotMap1.get(key).getNumPlate());
-//            }
             numPlateList.add(parkingLotMap1.get(lotNumberList.get(i)).getNumPlate());
         }
         return numPlateList;
     }
 
+    /**
+     *
+     * @param key
+     * @return returns string
+     */
     public String getVehicleNumberPlateBylotNumber(int key) {
         return parkingLotMap1.get(key).getNumPlate();
     }
